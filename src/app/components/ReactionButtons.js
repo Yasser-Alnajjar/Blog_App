@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { reactionAdded } from "../../redux/slices/posts/postsSlice";
-
+import Actions from "./ActionsButtons";
 const reactionEmoji = {
   thumbsUp: "👍",
   wow: "😮",
@@ -27,6 +27,11 @@ const ReactionButtons = ({ post }) => {
     );
   });
 
-  return <div>{reactionButtons}</div>;
+  return (
+    <section className="reactions">
+      <div>{reactionButtons}</div>
+      <Actions post={post} />
+    </section>
+  );
 };
 export default ReactionButtons;

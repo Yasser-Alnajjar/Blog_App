@@ -15,7 +15,7 @@ const PostsList = () => {
   const error = useSelector(getPostsError);
   console.log(posts);
   useEffect(() => {
-    if (postsStatus == "idle") {
+    if (postsStatus === "idle") {
       dispatch(fetchPosts());
     }
   }, [postsStatus, dispatch]);
@@ -33,10 +33,10 @@ const PostsList = () => {
     content = <p>{error}</p>;
   }
   return (
-    <section>
+    <>
       <h2>Posts</h2>
-      {content}
-    </section>
+      <div className="posts">{content}</div>
+    </>
   );
 };
 export default PostsList;

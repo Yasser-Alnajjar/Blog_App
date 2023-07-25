@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { sub } from "date-fns";
 import { siteURL } from "../../../utils";
@@ -16,15 +16,29 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
     return error.message;
   }
 });
-export const addNewPost = createAsyncThunk("posts/addNewPost", async (data) => {
-  try {
-    const response = await axios.post(`${siteURL}/posts`, data);
-    return response.data;
-  } catch (error) {
-    return error.message;
+export const addNewPost = createAsyncThunk(
+  "posts/addNewPost",
+  async (payload) => {
+    try {
+      const response = await axios.post(`${siteURL}/posts`, payload);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
   }
-});
-
+);
+export const updatePost = createAsyncThunk(
+  "post/updatePost",
+  async (payload) => {
+    const { id } = payload;
+    try {
+      const response = await axios.put(`${siteURL}/posts/${id}`, payload);
+      return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -95,6 +109,17 @@ const postsSlice = createSlice({
           coffee: 0,
         };
         state.posts.push(action.payload);
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        if (!action.payload?.id) {
+          console.log("Update Could not Complete");
+          console.log(action.payload);
+          return;
+        }
+        const { id } = action.payload;
+        action.payload.date = new Date().toISOString();
+        const posts = state.posts.filter((post) => post.id !== id);
+        state.posts = [...posts, action.payload];
       });
   },
 });
@@ -103,6 +128,12 @@ export const selectAllPosts = (state) => state.posts.posts;
 export const getPostsStatus = (state) => state.posts.status;
 export const getPostsError = (state) => state.posts.error;
 
+export const getPostById = (state, postId) =>
+  state.posts.posts.find((post) => {
+    console.log("post.id", post.id);
+    console.log("postId", postId);
+    return post.id === +postId;
+  });
 export const { postAdded, reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;

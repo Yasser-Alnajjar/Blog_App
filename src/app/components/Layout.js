@@ -1,18 +1,12 @@
+import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
+
 const Layout = () => {
   return (
     <main>
-      <div className="navbar">
-        <div className="container">
-          <h3>Blog Posts</h3>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <Toaster position="top-right" reverseOrder={true} />
+      <Navbar />
       <div className="container">
         <Outlet />
       </div>

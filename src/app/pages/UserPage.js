@@ -36,9 +36,7 @@ const UserPage = () => {
   ));
   return (
     <section>
-      <h2 style={{ textAlign: "center", margin: "1rem 0" }}>
-        {user.full_name}
-      </h2>
+      <h2 style={{ textAlign: "center", margin: "1rem 0" }}>{user.name}</h2>
       <ol>{postTitles}</ol>
     </section>
   );

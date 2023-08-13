@@ -69,7 +69,7 @@ const EditPost = () => {
   };
   const usersOptions = users.map((user) => (
     <option key={user.id} value={user.id}>
-      {user.full_name}
+      {user.name}
     </option>
   ));
   return (

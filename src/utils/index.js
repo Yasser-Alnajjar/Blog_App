@@ -1,1 +1,2 @@
-export const siteURL = process.env.SITE_URL;
+export const siteURL = "https://redux-blog-server-bgit.onrender.com";
+

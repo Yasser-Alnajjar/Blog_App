@@ -4,25 +4,19 @@ import PostAuthor from "../components/PostAuthor";
 import TimeAgo from "../components/TimeAgo";
 import ReactionButtons from "../components/ReactionButtons";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import toast from "react-hot-toast";
 const PostSinglePage = () => {
   const { postId } = useParams();
   const navigatate = useNavigate();
   const dispatch = useDispatch();
-  const [requestStatus, setRequestStatus] = useState("idle");
-  console.log(+postId);
   const post = useSelector((state) => getPostById(state, postId));
   if (!post) return <section>Post Is Not Found </section>;
   const onDeletePost = () => {
     try {
-      setRequestStatus("pending");
       dispatch(deletePost({ id: post.id })).unwrap();
       navigatate("/");
     } catch (err) {
       toast.error(err.message);
-    } finally {
-      setRequestStatus("idle");
     }
   };
   return (

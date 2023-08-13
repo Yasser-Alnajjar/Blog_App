@@ -19,10 +19,24 @@ const AddPostForm = () => {
   const onBodyChanged = (e) => setBody(e.target.value);
   const onAuthorChanged = (e) => setUserId(+e.target.value);
 
-  const onSavePostClicked = () => {
+  const onSavePostClicked = async () => {
     try {
       setAddRequestStatus("pending");
-      dispatch(addNewPost({ title, body, userId })).unwrap();
+      dispatch(
+        addNewPost({
+          title,
+          body,
+          userId,
+          reactions: {
+            thumbsUp: 0,
+            wow: 0,
+            heart: 0,
+            sad: 0,
+            executed: 0,
+          },
+          date: new Date().toISOString(),
+        })
+      ).unwrap();
       setTitle("");
       setBody("");
       setUserId("");

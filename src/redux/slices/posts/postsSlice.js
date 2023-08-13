@@ -14,7 +14,6 @@ const postAdapter = createEntityAdapter({
 const initialState = postAdapter.getInitialState({
   status: "idle",
   error: null,
-  count: 0,
 });
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   try {
@@ -32,7 +31,7 @@ export const addNewPost = createAsyncThunk(
       thunkAPI.dispatch(toast.success("Post Added"));
       return response.data;
     } catch (error) {
-      thunkAPI.dispatch(toast.error(error.message));
+      // thunkAPI.dispatch(toast.error(error.message));
       return error.message;
     }
   }
@@ -75,9 +74,6 @@ const postsSlice = createSlice({
       if (existingPost) {
         existingPost.reactions[reaction]++;
       }
-    },
-    increaseCount: (state, action) => {
-      state.count = state.count + 1;
     },
   },
   extraReducers: (builder) => {
@@ -177,6 +173,6 @@ export const selectPostByUser = createSelector(
   [selectAllPosts, (state, userId) => userId],
   (posts, userId) => posts.filter((post) => post.userId === Number(userId))
 );
-export const { increaseCount, reactionAdded } = postsSlice.actions;
+export const { reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;

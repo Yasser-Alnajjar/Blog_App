@@ -1,1 +1,1 @@
-export const siteURL = "http://localhost:3500";
+export const siteURL = process.env.SITE_URL;
